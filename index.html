@@ -1,38 +1,62 @@
-import random
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slot Machine Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #111;
+      color: white;
+      padding-top: 50px;
+    }
+    .slot {
+      font-size: 40px;
+      margin: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    #balance {
+      font-size: 20px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎰 Slot Machine Game 🎰</h1>
+  <div class="slot" id="slots">🍒 🍋 🍉</div>
+  <button onclick="spin()">🎲 Spin</button>
+  <div id="balance">Balance: ₹100</div>
 
-# Slot Machine Game
-symbols = ["🍒", "🍋", "🍉", "⭐", "🔔"]
-balance = 100  # Starting balance
+  <script>
+    let balance = 100;
+    const symbols = ["🍒", "🍋", "🍉", "⭐", "🔔"];
 
-print("🎰 Welcome to the Slot Machine Game!")
-print("You start with ₹", balance)
+    function spin() {
+      if (balance <= 0) {
+        alert("You don't have enough balance!");
+        return;
+      }
 
-while balance > 0:
-    bet = int(input(f"\nYour balance is ₹{balance}. Enter your bet (0 to quit): "))
-    
-    if bet == 0:
-        print("Thanks for playing! Your final balance is ₹", balance)
-        break
-    if bet > balance:
-        print("⚠️ You don't have enough balance!")
-        continue
-    
-    # Spin the slot machine
-    spin = [random.choice(symbols) for _ in range(3)]
-    print("🎲 Spinning...", " | ".join(spin))
-    
-    # Check for win
-    if spin[0] == spin[1] == spin[2]:
-        win = bet * 5
-        balance += win
-        print(f"🎉 JACKPOT! You won ₹{win}!")
-    elif spin[0] == spin[1] or spin[1] == spin[2] or spin[0] == spin[2]:
-        win = bet * 2
-        balance += win
-        print(f"✨ Nice! You won ₹{win}.")
-    else:
-        balance -= bet
-        print("😢 You lost this round.")
+      let slot1 = symbols[Math.floor(Math.random() * symbols.length)];
+      let slot2 = symbols[Math.floor(Math.random() * symbols.length)];
+      let slot3 = symbols[Math.floor(Math.random() * symbols.length)];
 
-if balance <= 0:
-    print("💀 Game Over! You ran out of money.")
+      document.getElementById("slots").innerText = `${slot1} ${slot2} ${slot3}`;
+      balance -= 10;
+
+      if (slot1 === slot2 && slot2 === slot3) {
+        balance += 50;
+        alert("🎉 You Win ₹50!");
+      }
+
+      document.getElementById("balance").innerText = `Balance: ₹${balance}`;
+    }
+  </script>
+</body>
+</html>
