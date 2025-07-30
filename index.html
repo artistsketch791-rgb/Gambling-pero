@@ -1,0 +1,38 @@
+import random
+
+# Slot Machine Game
+symbols = ["🍒", "🍋", "🍉", "⭐", "🔔"]
+balance = 100  # Starting balance
+
+print("🎰 Welcome to the Slot Machine Game!")
+print("You start with ₹", balance)
+
+while balance > 0:
+    bet = int(input(f"\nYour balance is ₹{balance}. Enter your bet (0 to quit): "))
+    
+    if bet == 0:
+        print("Thanks for playing! Your final balance is ₹", balance)
+        break
+    if bet > balance:
+        print("⚠️ You don't have enough balance!")
+        continue
+    
+    # Spin the slot machine
+    spin = [random.choice(symbols) for _ in range(3)]
+    print("🎲 Spinning...", " | ".join(spin))
+    
+    # Check for win
+    if spin[0] == spin[1] == spin[2]:
+        win = bet * 5
+        balance += win
+        print(f"🎉 JACKPOT! You won ₹{win}!")
+    elif spin[0] == spin[1] or spin[1] == spin[2] or spin[0] == spin[2]:
+        win = bet * 2
+        balance += win
+        print(f"✨ Nice! You won ₹{win}.")
+    else:
+        balance -= bet
+        print("😢 You lost this round.")
+
+if balance <= 0:
+    print("💀 Game Over! You ran out of money.")
